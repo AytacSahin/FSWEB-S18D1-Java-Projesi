@@ -2,6 +2,10 @@ package com.workintech.burger.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data; // getter setter to-string hash hepsini koydu
 import lombok.NoArgsConstructor; // argümansız boş constructor
 
@@ -10,21 +14,20 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "burger", schema = "workintech") // spring bir şema. Bu şema altında topladık tabloları.
-// Burger sınıfının veritabanındaki tablo adının burger olduğunu ve spring şeması altında bulunması gerektiğini söyledim.
-// Eğer @Table kullanmasaydım tablo adı Burger olucaktı.
-
+@Table(name = "burger", schema = "spring")
 public class Burger {
-
-    @Id // primary key tanımlarız.Her kaydı benzersiz tanımlar.
-    @GeneratedValue(strategy = GenerationType.IDENTITY ) // Birincil anahtarın nasıl otomatik oluşturulacağını anlatırız.
-    @Column(name = "id") // 1- Bunun bir kolon olduğunu anlatıyoruz. 2- Bu kolon adının "id" olduğunu söylüyoruz.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @Column(name = "name")
+    @NotNull
+    @NotBlank
     private String name;
 
     @Column(name = "price")
+    @DecimalMin("20")
     private double price;
 
     @Column(name = "is_vegan")
